@@ -1,0 +1,38 @@
+headers {
+  Authorization: Bearer {{access_token}}
+}
+
+auth {
+  mode: none
+}
+
+script:pre-request {
+  const axios = require('axios');
+  
+  if (!bru.getVar('access_token') || Date.now() >= bru.getVar('access_token_expiration')) {
+    console.log('aaaaa')
+    try {
+      let res = await axios({
+        method: 'POST',
+        url: 'https://api.intra.42.fr/oauth/token',
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+        data: {
+          grant_type: 'client_credentials',
+          client_id: bru.getVar('CLIENT_ID'),
+          client_secret: bru.getVar('CLIENT_SECRET')
+        }
+      })
+      
+      console.log(res)
+  
+      bru.setVar('access_token', res.data.access_token)
+      const expires_in = res.data.expires_in
+      bru.setVar('access_token_expiration', new Date() + expires_in*1000)
+    } catch (err) {
+      console.error(err)
+      throw err
+    }
+  }
+}
