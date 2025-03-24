@@ -1,0 +1,21 @@
+meta {
+  name: coalitions
+  type: http
+  seq: 4
+}
+
+get {
+  url: {{BASE_URL}}/v2/blocs?filter[campus_id]={{campus_id}}&filter[cursus_id]={{cursus}}
+  body: none
+  auth: none
+}
+
+params:query {
+  filter[campus_id]: {{campus_id}}
+  filter[cursus_id]: {{cursus}}
+}
+
+vars:pre-request {
+  campus_id: {{PARIS_CAMPUS_ID}}
+  cursus: {{42_CURSUS_ID}}
+}

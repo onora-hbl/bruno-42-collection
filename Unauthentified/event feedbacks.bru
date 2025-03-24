@@ -1,0 +1,21 @@
+meta {
+  name: event feedbacks
+  type: http
+  seq: 3
+}
+
+get {
+  url: {{BASE_URL}}/v2/events/{{event_id}}/feedbacks?per_page={{PAGE_SIZE}}&page={{page}}
+  body: none
+  auth: none
+}
+
+params:query {
+  per_page: {{PAGE_SIZE}}
+  page: {{page}}
+}
+
+vars:pre-request {
+  event_id: 30369
+  page: 1
+}

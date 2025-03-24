@@ -1,0 +1,23 @@
+meta {
+  name: events
+  type: http
+  seq: 2
+}
+
+get {
+  url: {{BASE_URL}}/v2/campus/{{campus_id}}/events?per_page={{PAGE_SIZE}}&page={{page}}&sort={{sort}}
+  body: none
+  auth: none
+}
+
+params:query {
+  per_page: {{PAGE_SIZE}}
+  page: {{page}}
+  sort: {{sort}}
+}
+
+vars:pre-request {
+  campus_id: {{PARIS_CAMPUS_ID}}
+  page: 1
+  sort: {{FILTER_BEGIN_AT_DESC}}
+}
