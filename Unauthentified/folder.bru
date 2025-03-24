@@ -27,3 +27,8 @@ script:pre-request {
   
   req.setHeader('Authorization', `Bearer ${bru.getVar('access_token')}`)
 }
+
+docs {
+  # Auth
+  All calls will automatically be populated with auth header
+}

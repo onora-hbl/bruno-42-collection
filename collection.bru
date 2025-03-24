@@ -13,3 +13,12 @@ script:post-response {
     bru.setVar('last_page', res.getHeader('X-Total'))
   }
 }
+
+docs {
+  # Constants
+  - `PARIS_CAMPUS_ID` : The id for the camus of Paris
+  - `42_CURSUS_ID` : The id of the 42cursus (main cursus)
+  
+  # Variables
+  - If the last endpoint is paginated, the `last_page` is populated with the number of page returned by the last call
+}
