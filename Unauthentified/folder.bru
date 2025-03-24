@@ -1,0 +1,38 @@
+meta {
+  name: Unauthentified
+}
+
+script:pre-request {
+  const axios = require('axios');
+  
+  if (!bru.getVar('access_token') || (new Date()).getTime() >= bru.getVar('access_token_expiration')) {
+    try {
+      console.log({
+        method: 'POST',
+        url: `${bru.getEnvVar('BASE_URL')}/oauth/token`,
+        data: {
+          grant_type: 'client_credentials',
+          client_id: bru.getEnvVar('CLIENT_ID'),
+          client_secret: bru.getEnvVar('CLIENT_SECRET')
+        }
+      })
+      let res = await axios({
+        method: 'POST',
+        url: `${bru.getEnvVar('BASE_URL')}/oauth/token`,
+        data: {
+          grant_type: 'client_credentials',
+          client_id: bru.getEnvVar('CLIENT_ID'),
+          client_secret: bru.getEnvVar('CLIENT_SECRET')
+        }
+      })
+      
+      bru.setVar('access_token', res.data.access_token)
+      bru.setVar('access_token_expiration', (new Date()).getTime() + res.data.expires_in*1000)
+    } catch (err) {
+      console.error(err)
+      throw new Error('Impossible to exchange auth token: ' + err)
+    }
+  }
+  
+  req.setHeader('Authorization', `Bearer ${bru.getVar('access_token')}`)
+}
