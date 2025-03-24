@@ -7,3 +7,9 @@ vars:pre-request {
   42_CURSUS_ID: 21
   FILTER_BEGIN_AT_DESC: -begin_at
 }
+
+script:post-response {
+  if (res.getHeader('X-Total') != null) {
+    bru.setVar('last_page', res.getHeader('X-Total'))
+  }
+}
