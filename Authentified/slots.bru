@@ -1,0 +1,15 @@
+meta {
+  name: slots
+  type: http
+  seq: 2
+}
+
+get {
+  url: {{BASE_URL}}/v2/me/slots?filter[future]=true
+  body: none
+  auth: inherit
+}
+
+params:query {
+  filter[future]: true
+}
