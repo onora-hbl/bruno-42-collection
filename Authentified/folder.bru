@@ -1,0 +1,11 @@
+meta {
+  name: Authentified
+}
+
+script:pre-request {
+  if (bru.getVar('authentified_token') == null) {
+    throw new Error('Oauth2 needed')
+  }
+  
+  req.setHeader('Authorization', `Bearer ${bru.getVar('authentified_token')}`)
+}
